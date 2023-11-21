@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace C__ConsoleApp.Models
 {
-    internal class BaseEntity
+    public abstract class BaseEntity
     {
         public int Id { get; set; }
     }
