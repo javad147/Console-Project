@@ -15,3 +15,6 @@ C:\Users\User\Desktop\MiniProject\Controllers\obj\Debug\net6.0\Controllers.dll
 C:\Users\User\Desktop\MiniProject\Controllers\obj\Debug\net6.0\refint\Controllers.dll
 C:\Users\User\Desktop\MiniProject\Controllers\obj\Debug\net6.0\Controllers.pdb
 C:\Users\User\Desktop\MiniProject\Controllers\obj\Debug\net6.0\ref\Controllers.dll
+C:\Users\User\Desktop\MiniProject\Controllers\bin\Debug\net6.0\Repository.dll
+C:\Users\User\Desktop\MiniProject\Controllers\bin\Debug\net6.0\Repository.pdb
+C:\Users\User\Desktop\MiniProject\Controllers\obj\Debug\net6.0\Controllers.sourcelink.json

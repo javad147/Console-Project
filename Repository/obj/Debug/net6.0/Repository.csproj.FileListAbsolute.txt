@@ -13,3 +13,4 @@ C:\Users\User\Desktop\MiniProject\Repository\obj\Debug\net6.0\Repository.dll
 C:\Users\User\Desktop\MiniProject\Repository\obj\Debug\net6.0\refint\Repository.dll
 C:\Users\User\Desktop\MiniProject\Repository\obj\Debug\net6.0\Repository.pdb
 C:\Users\User\Desktop\MiniProject\Repository\obj\Debug\net6.0\ref\Repository.dll
+C:\Users\User\Desktop\MiniProject\Repository\obj\Debug\net6.0\Repository.sourcelink.json

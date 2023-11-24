@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Controllers.Controller;
+using System;
 
 namespace CourseApp
 {
@@ -6,26 +7,16 @@ namespace CourseApp
     {
         static void Main()
         {
-            UserService userService = new UserService();
-            UserController userController = new UserController(userService);
-
-            userService.MainMenu();
-
             GroupServices groupServices = new GroupServices();
             GroupController groupController = new GroupController(groupServices);
 
-            for (int i = 1; i <= 5; i++)
-            {
-                Group newGroup = new Group
-                {
-                    Name = $"Group{i}",
-                    Capacity = i * 10
-                };
+            StudentService studentService = new StudentService();
+            StudentController studentController = new StudentController(studentService);
 
-                groupServices.CreateGroup(newGroup);
-            }
+            UserService userService = new UserService(groupController);
+            UserController userController = new UserController(userService);
 
-            groupController.StartApplication();
+            userService.MainMenu();
         }
     }
 }

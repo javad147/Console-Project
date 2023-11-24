@@ -12,6 +12,19 @@
           "bin/placeholder/Domain.dll": {}
         }
       },
+      "Repository/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Repository.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Repository.dll": {}
+        }
+      },
       "Service/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -33,6 +46,11 @@
       "path": "../Domain/Domain.csproj",
       "msbuildProject": "../Domain/Domain.csproj"
     },
+    "Repository/1.0.0": {
+      "type": "project",
+      "path": "../Repository/Repository.csproj",
+      "msbuildProject": "../Repository/Repository.csproj"
+    },
     "Service/1.0.0": {
       "type": "project",
       "path": "../Service/Service.csproj",
@@ -42,6 +60,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Domain >= 1.0.0",
+      "Repository >= 1.0.0",
       "Service >= 1.0.0"
     ]
   },
@@ -81,6 +100,9 @@
             "C:\\Users\\User\\Desktop\\MiniProject\\Domain\\Domain.csproj": {
               "projectPath": "C:\\Users\\User\\Desktop\\MiniProject\\Domain\\Domain.csproj"
             },
+            "C:\\Users\\User\\Desktop\\MiniProject\\Repository\\Repository.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\MiniProject\\Repository\\Repository.csproj"
+            },
             "C:\\Users\\User\\Desktop\\MiniProject\\Service\\Service.csproj": {
               "projectPath": "C:\\Users\\User\\Desktop\\MiniProject\\Service\\Service.csproj"
             }
@@ -112,7 +134,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

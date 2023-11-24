@@ -1,60 +1,64 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using C__ConsoleApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-//namespace Service
-//{
-//    public class StudentService : BaseService
-//    {
-//        private readonly IRepository<Student> studentRepository;
+public class StudentService
+{
+    private List<Student> students;
 
-//        public StudentService(IRepository<Student> studentRepository)
-//        {
-//            this.studentRepository = studentRepository;
-//        }
+    public StudentService()
+    {
+        students = new List<Student>();
+    }
 
-//        public void CreateStudent(Student student, int groupId)
-//        {
+    public void Create(Student s)
+    {
+        s.ID = GenId();
+        students.Add(s);
+        Console.WriteLine($"Student created with ID {s.ID}");
+    }
 
-//            throw new NotImplementedException();
-//        }
+    public void Delete(int id)
+    {
+        Student s = students.FirstOrDefault(st => st.ID == id);
+        if (s != null)
+        {
+            students.Remove(s);
+            Console.WriteLine($"Student with ID {id} deleted.");
+        }
+        else
+        {
+            Console.WriteLine($"Student with ID {id} not found.");
+        }
+    }
 
-//        public void DeleteStudent(int studentId)
-//        {
+    public void Edit(int id, Student us)
+    {
+        Student s = students.FirstOrDefault(st => st.ID == id);
+        if (s != null)
+        {
+            s.FullName = us.FullName;
+            s.Address = us.Address;
+            s.Age = us.Age;
+            s.Phone = us.Phone;
 
-//            throw new NotImplementedException();
-//        }
+            Console.WriteLine($"Student with ID {id} updated.");
+        }
+        else
+        {
+            Console.WriteLine($"Student with ID {id} not found.");
+        }
+    }
 
-//        public void UpdateStudent(Student student)
-//        {
+    public Student GetById(int id) => students.FirstOrDefault(s => s.ID == id);
 
-//            throw new NotImplementedException();
-//        }
+    public List<Student> GetALL() => students;
 
-//        public Student GetStudentById(int studentId)
-//        {
+    public List<Student> Filter(string kw) => students.Where(s => s.FullName.Contains(kw, StringComparison.OrdinalIgnoreCase)).ToList();
 
-//            throw new NotImplementedException();
-//        }
+    public List<Student> Search() => students.OrderBy(s => s.Age).ToList();
 
-//        public IEnumerable<Student> GetAllStudents()
-//        {
+    private int GenId() => students.Count + 1;
+}
 
-//            throw new NotImplementedException();
-//        }
-
-//        public IEnumerable<Student> SearchStudents(string firstName, string lastName)
-//        {
-
-//            throw new NotImplementedException();
-//        }
-
-//        public IEnumerable<Student> SortStudentsByAge()
-//        {
-
-//            throw new NotImplementedException();
-//        }
-//    }
-//}

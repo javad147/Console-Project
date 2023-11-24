@@ -22,3 +22,4 @@ C:\Users\User\Desktop\MiniProject\C#_ConsoleApp\obj\Debug\net6.0\refint\C#_Conso
 C:\Users\User\Desktop\MiniProject\C#_ConsoleApp\obj\Debug\net6.0\C#_ConsoleApp.pdb
 C:\Users\User\Desktop\MiniProject\C#_ConsoleApp\obj\Debug\net6.0\C#_ConsoleApp.genruntimeconfig.cache
 C:\Users\User\Desktop\MiniProject\C#_ConsoleApp\obj\Debug\net6.0\ref\C#_ConsoleApp.dll
+C:\Users\User\Desktop\MiniProject\C#_ConsoleApp\obj\Debug\net6.0\C#_ConsoleApp.sourcelink.json

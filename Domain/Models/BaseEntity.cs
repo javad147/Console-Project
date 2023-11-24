@@ -2,7 +2,7 @@
 {
     private static int counter = 0;
 
-    public int ID { get; }
+    public int ID { get; set; }
 
     public BaseEntity()
     {
