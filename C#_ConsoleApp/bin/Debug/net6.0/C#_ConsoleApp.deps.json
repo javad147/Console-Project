@@ -8,35 +8,16 @@
     ".NETCoreApp,Version=v6.0": {
       "C#_ConsoleApp/1.0.0": {
         "dependencies": {
-          "Controllers": "1.0.0",
           "Domain": "1.0.0",
-          "Repository": "1.0.0",
           "Service": "1.0.0"
         },
         "runtime": {
           "C#_ConsoleApp.dll": {}
         }
       },
-      "Controllers/1.0.0": {
-        "dependencies": {
-          "Domain": "1.0.0",
-          "Service": "1.0.0"
-        },
-        "runtime": {
-          "Controllers.dll": {}
-        }
-      },
       "Domain/1.0.0": {
         "runtime": {
           "Domain.dll": {}
-        }
-      },
-      "Repository/1.0.0": {
-        "dependencies": {
-          "Domain": "1.0.0"
-        },
-        "runtime": {
-          "Repository.dll": {}
         }
       },
       "Service/1.0.0": {
@@ -55,17 +36,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Controllers/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Domain/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Repository/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

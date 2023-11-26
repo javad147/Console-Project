@@ -1,183 +1,99 @@
-﻿using C__ConsoleApp.Models;
+﻿using Service.Helpers.Constant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
-
-namespace CourseApp
+public class UserService
 {
-    public class UserService
+    public List<User> Users { get; set; } = new List<User>();
+    public void Register()
     {
-        private List<User> users = new List<User>();
-        private User currentUser;
-        private GroupController groupController;
-        private StudentController studentController;
+        Console.Write(Message.UserName);
+        string name = Console.ReadLine();
 
-        public UserService(GroupController groupController, StudentController studentController)
+        Console.Write(Message.UserSurname);
+        string surname = Console.ReadLine();
+
+        if (!IsValidName(name) || !IsValidName(surname))
         {
-            this.groupController = groupController;
-            this.studentController = studentController;
+            Console.WriteLine(Message.InvalidNameOrSurname);
+            return;
         }
 
-        public void MainMenu()
+        int age;
+        while (!TryReadInt(Message.UserAge, out age) || age < 18 || age > 65) ;
+
+        string email = ReadValidInput(Message.UserEmail, IsValidEmail);
+
+        string password = ReadValidInput(Message.UserPassword, s => s.Length >= 8);
+
+        string confirmPassword;
+        do
         {
-            Console.WriteLine("Welcome to our application");
-
-            while (true)
+            confirmPassword = ReadValidInput(Message.ConfirmPassword, s => s == password);
+            if (confirmPassword != password)
             {
-                Console.WriteLine("Please select one option:");
-                Console.WriteLine("1 - Register");
-                Console.WriteLine("2 - Login");
-                Console.WriteLine("3 - Exit");
-
-                int choice = GetChoice(3);
-
-                switch (choice)
-                {
-                    case 1:
-                        Register();
-                        break;
-                    case 2:
-                        Login();
-                        break;
-                    case 3:
-                        Environment.Exit(0);
-                        break;
-                }
+                Console.WriteLine(Message.PasswordDoNotMatch);
             }
-            studentController.Run();
+        } while (confirmPassword != password);
+
+        User newUser = new User(Users.Count + 1, name, surname, age, email, password);
+        Users.Add(newUser);
+
+        Console.WriteLine(Message.RegistrationSuccessful);
+    }
+    public void Login(ref User currentUser)
+    {
+        string email = ReadInput(Message.EnterEmail);
+        if (email.ToLower() == "exit")
+        {
+            return;
         }
 
-        static void Register()
+        string password = ReadInput(Message.EnterPassword);
+        if (password.ToLower() == "exit")
         {
-            Console.WriteLine("Enter Name:");
-            string name = Console.ReadLine();
-
-            Console.WriteLine("Enter Surname:");
-            string surname = Console.ReadLine();
-
-            Console.WriteLine("Enter Age:");
-            int age = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("Enter Email:");
-            string email = Console.ReadLine();
-
-            Console.WriteLine("Enter Password:");
-            string password = Console.ReadLine();
-
-            Console.WriteLine("Confirm Password:");
-            string confirmPassword = Console.ReadLine();
-
-            if (password != confirmPassword)
-            {
-                Console.WriteLine("Password and Confirm Password do not match. Registration failed.");
-                return;
-            }
-
-            User newUser = new User(name, surname, age, email, password);
-            users.Add(newUser);
-
-            Console.WriteLine("Registration successful!");
+            return;
         }
 
-        static void Login()
+        currentUser = Users.Find(u => u.Email == email && u.Password == password);
+
+        Console.WriteLine(currentUser != null ? Message.LoginSuccessful : Message.InvalidEmailPassword);
+    }
+    private bool IsValidName(string input) => !string.IsNullOrWhiteSpace(input) && !Regex.IsMatch(input, "[^a-zA-Z]");
+    public static bool IsValidEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            return false;
+
+        try
         {
-            Console.WriteLine("Enter Email:");
-            string email = Console.ReadLine();
-
-            Console.WriteLine("Enter Password:");
-            string password = Console.ReadLine();
-
-            currentUser = users.Find(u => u.Email == email && u.Password == password);
-
-            if (currentUser == null)
-            {
-                Console.WriteLine("Invalid email or password. Login failed.");
-            }
-            else
-            {
-                Console.WriteLine("Login successful!");
-            }
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
         }
-
-        static void Logout()
+        catch
         {
-            currentUser = null;
-            Console.WriteLine("Logout successful!");
-            Main();
-        }
-        private int GetChoice(int maxChoice)
-        {
-            int choice;
-
-            while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > maxChoice)
-            {
-                Console.WriteLine($"Invalid choice. Please enter a number between 1 and {maxChoice}.");
-            }
-
-            return choice;
-        }
-
-        static void DisplayMenu()
-        {
-            while (true)
-            {
-                Console.WriteLine("Please select one option:");
-                Console.WriteLine("Group operations: 1-Create, 2-Delete, 3-Edit, 4-GetAll, 5-Search, 6-Sorting");
-                Console.WriteLine("Student operations: 7-Create, 8-Delete, 9-Edit, 10-GetAll, 11-Filter, 12-Search");
-                Console.WriteLine("Logout: 0");
-
-                int choice = Convert.ToInt32(Console.ReadLine());
-
-                switch (choice)
-                {
-                    case 0:
-                        Logout();
-                        return;
-                    case 1:
-                        CreateGroup();
-                        break;
-                    case 2:
-                        DeleteGroup();
-                        break;
-                    case 3:
-                        EditGroup();
-                        break;
-                    case 4:
-                        GetAllGroups();
-                        break;
-                    case 5:
-                        SearchGroups();
-                        break;
-                    case 6:
-                        SortingGroups();
-                        break;
-                    case 7:
-                        CreateStudent();
-                        break;
-                    case 8:
-                        DeleteStudent();
-                        break;
-                    case 9:
-                        EditStudent();
-                        break;
-                    case 10:
-                        GetAllStudents();
-                        break;
-                    case 11:
-                        FilterStudents();
-                        break;
-                    case 12:
-                        SearchStudents();
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice.");
-                        break;
-                }
-            }
+            return false;
         }
     }
-
+    private static bool TryReadInt(string message, out int result)
+    {
+        Console.Write(message);
+        return int.TryParse(Console.ReadLine(), out result);
+    }
+    private string ReadInput(string message)
+    {
+        Console.Write(message);
+        return Console.ReadLine();
+    }
+    private string ReadValidInput(string message, Func<string, bool> validation)
+    {
+        string input;
+        do
+        {
+            input = ReadInput(message);
+        } while (!validation(input));
+        return input;
+    }
 }
-
-

@@ -2,21 +2,6 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Controllers/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "Domain": "1.0.0",
-          "Repository": "1.0.0",
-          "Service": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Controllers.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Controllers.dll": {}
-        }
-      },
       "Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -25,19 +10,6 @@
         },
         "runtime": {
           "bin/placeholder/Domain.dll": {}
-        }
-      },
-      "Repository/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "Domain": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Repository.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Repository.dll": {}
         }
       },
       "Service/1.0.0": {
@@ -56,20 +28,10 @@
     }
   },
   "libraries": {
-    "Controllers/1.0.0": {
-      "type": "project",
-      "path": "../Controllers/Controllers.csproj",
-      "msbuildProject": "../Controllers/Controllers.csproj"
-    },
     "Domain/1.0.0": {
       "type": "project",
       "path": "../Domain/Domain.csproj",
       "msbuildProject": "../Domain/Domain.csproj"
-    },
-    "Repository/1.0.0": {
-      "type": "project",
-      "path": "../Repository/Repository.csproj",
-      "msbuildProject": "../Repository/Repository.csproj"
     },
     "Service/1.0.0": {
       "type": "project",
@@ -79,9 +41,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Controllers >= 1.0.0",
       "Domain >= 1.0.0",
-      "Repository >= 1.0.0",
       "Service >= 1.0.0"
     ]
   },
@@ -118,14 +78,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\User\\Desktop\\MiniProject\\Controllers\\Controllers.csproj": {
-              "projectPath": "C:\\Users\\User\\Desktop\\MiniProject\\Controllers\\Controllers.csproj"
-            },
             "C:\\Users\\User\\Desktop\\MiniProject\\Domain\\Domain.csproj": {
               "projectPath": "C:\\Users\\User\\Desktop\\MiniProject\\Domain\\Domain.csproj"
-            },
-            "C:\\Users\\User\\Desktop\\MiniProject\\Repository\\Repository.csproj": {
-              "projectPath": "C:\\Users\\User\\Desktop\\MiniProject\\Repository\\Repository.csproj"
             },
             "C:\\Users\\User\\Desktop\\MiniProject\\Service\\Service.csproj": {
               "projectPath": "C:\\Users\\User\\Desktop\\MiniProject\\Service\\Service.csproj"

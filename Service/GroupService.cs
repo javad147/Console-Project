@@ -1,94 +1,127 @@
-﻿using System;
+﻿using Service.Helpers.Constant;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-
-public class GroupServices
+public class GroupService
 {
-    private List<Group> groups = new List<Group>();
-
-    public void CreateGroup(Group newGroup)
+    public List<Group> Groups { get; set; } = new List<Group>();
+    public void CreateGroup()
     {
-        if (groups.Any(g => g.Name == newGroup.Name))
+        Console.WriteLine(Message.GroupName);
+        string name = Console.ReadLine();
+
+      
+        if (Groups.Any(g => g.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
         {
-            Console.WriteLine("A group with the same name already exists. Please choose a different name.");
+            Console.WriteLine($"Group with name '{name}' already exists. Cannot create duplicate groups.");
             return;
         }
 
-        groups.Add(newGroup);
-        Console.WriteLine("Group successfully created. Group ID: " + newGroup.ID);
+        Console.WriteLine(Message.GroupCapacity);
+        int capacity = Convert.ToInt32(Console.ReadLine());
+
+        Group newGroup = new Group(Groups.Count + 1, name, capacity);
+        Groups.Add(newGroup);
+
+        Console.WriteLine(Message.GroupCapacityCreated);
     }
-
-
-    public void DeleteGroup(int groupId)
+    public void DeleteGroup()
     {
-        Group groupToDelete = groups.FirstOrDefault(g => g.ID == groupId);
+        Console.WriteLine(Message.GroupDelete);
+        string groupName = Console.ReadLine();
+
+        Group groupToDelete = Groups.Find(g => g.Name == groupName);
 
         if (groupToDelete != null)
         {
-            groups.Remove(groupToDelete);
-            Console.WriteLine("Group successfully deleted.");
+            Groups.Remove(groupToDelete);
+            Console.WriteLine(Message.GroupDeleteSuccessfull);
         }
         else
         {
-            Console.WriteLine("Group with the specified ID not found.");
+            Console.WriteLine(Message.NotFoundGroup);
         }
     }
-
-    public void EditGroup(int groupId)
+    public void EditGroup()
     {
-        Group groupToEdit = groups.FirstOrDefault(g => g.ID == groupId);
+        Console.WriteLine(Message.GroupEdit);
+        string groupName = Console.ReadLine();
+
+        Group groupToEdit = Groups.Find(g => g.Name == groupName);
 
         if (groupToEdit != null)
         {
-            Console.WriteLine("Enter new Name (leave empty to keep the current value):");
-            string newName = Console.ReadLine();
-            if (!string.IsNullOrEmpty(newName))
-            {
-                groupToEdit.Name = newName;
-                Console.WriteLine("Name successfully updated.");
-            }
+            Console.WriteLine(Message.EnterGroupName);
+            groupToEdit.Name = Console.ReadLine();
 
-            Console.WriteLine("Enter new Capacity (leave empty to keep the current value):");
-            string capacityInput = Console.ReadLine();
-            if (!string.IsNullOrEmpty(capacityInput) && int.TryParse(capacityInput, out int newCapacity))
-            {
-                groupToEdit.Capacity = newCapacity;
-                Console.WriteLine("Capacity successfully updated.");
-            }
+            Console.WriteLine(Message.GroupCapacityNew);
+            groupToEdit.Capacity = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Group successfully edited.");
+            Console.WriteLine(Message.GroupEdited);
         }
         else
         {
-            Console.WriteLine("Group with the specified ID not found.");
+            Console.WriteLine(Message.GroupNtFound);
         }
     }
-
-    public Group GetById(int groupId)
+    public void GetAllGroups()
     {
-        return groups.FirstOrDefault(g => g.ID == groupId);
+        foreach (var group in Groups)
+        {
+            Console.WriteLine($"Group ID: {group.ID}, Name: {group.Name}, Capacity: {group.Capacity}");
+        }
     }
-
-    public List<Group> GetAllGroups()
+    public void SearchGroups()
     {
-        return groups;
+        Console.WriteLine(Message.GroupNameLetter);
+        char firstLetter = Console.ReadKey().KeyChar;
+
+        if (firstLetter == '\n')
+        {
+            Console.WriteLine("Please enter a valid character.");
+            return;
+        }
+
+        Console.WriteLine();
+
+        List<Group> searchResults = Groups
+            .Where(g => g.Name.StartsWith(firstLetter.ToString(), StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        if (searchResults.Any())
+        {
+            foreach (var group in searchResults)
+            {
+                Console.WriteLine($"Group ID: {group.ID}, Name: {group.Name}, Capacity: {group.Capacity}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"No groups found with names starting with the letter '{firstLetter}'.");
+        }
     }
-
-    public List<Group> SearchGroups(string searchKeyword)
+    public void SortingGroups()
     {
-        return groups.Where(g => g.ID.ToString().Contains(searchKeyword) || g.Name.Contains(searchKeyword)).ToList();
+        Groups = Groups.OrderBy(g => g.Capacity).ToList();
+        Console.WriteLine(Message.GroupSortCapacity);
+        GetAllGroups();
     }
-
-    public List<Group> SortByCapacity()
+    public Group GetById()
     {
-        return groups.OrderBy(g => g.Capacity).ToList();
-    }
+        Console.WriteLine(Message.GroupIdEnter);
+        int groupId = Convert.ToInt32(Console.ReadLine());
 
-    public void DisplayCommandScreen()
-    {
-        Console.WriteLine("Group Operations: 1-Create, 2-Delete, 3-Edit, 4-GetById, 5-GetAll, 6-Search, 7-Sorting, 0-Exit");
+        Group group = Groups.FirstOrDefault(g => g.ID == groupId);
+
+        if (group != null)
+        {
+            Console.WriteLine($"Group ID: {group.ID}, Name: {group.Name}, Capacity: {group.Capacity}");
+        }
+        else
+        {
+            Console.WriteLine(Message.NewGroupNotFound);
+        }
+
+        return group;
     }
 }
-
-
